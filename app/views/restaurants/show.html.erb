@@ -1,0 +1,18 @@
+<h1><%= @restaurant.name %></h1>
+<h4><%= @restaurant.address %></h4>
+<p><%= @restaurant.category %></p>
+<hr>
+<div class='d-flex justify-content-between'>
+  <h4>Reviews</h4> <%# = link_to 'Add review', new_restaurant_review_path(@restaurant), class: 'btn btn-primary btn-sm' %>
+</div>
+<% @restaurant.reviews.each do |review| %>
+<p><%= '⁕' * review.rating.to_i %> | <%= review.content %></p>
+<% end %>
+<hr>
+<%= simple_form_for [@restaurant, @review] do |f| %>
+  <%= f.input :content %>
+  <%= f.input :rating, as: :select, collection: Review::RANGE %>
+  <%= f.submit "Submit review", class: "btn btn-primary" %>
+<% end %>
+<hr>
+<%= link_to 'Back to restaurants', restaurants_path, class: 'btn btn-outline-primary' %>
